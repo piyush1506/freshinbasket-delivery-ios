@@ -1,0 +1,23 @@
+workflows:
+  ios-workflow:
+    name: FreshInBasket Delivery iOS
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Yogesh
+    environment:
+      ios_signing:
+        distribution_type: development
+        bundle_identifier: in.freshinbasket.delivery
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Build iOS development IPA
+        script: |
+          flutter build ipa --debug
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
